@@ -21,7 +21,11 @@ frontend_origins = {
 }
 configured_origin = os.getenv("FRONTEND_ORIGIN")
 if configured_origin:
-    frontend_origins.add(configured_origin)
+    frontend_origins.update(
+        origin.strip()
+        for origin in configured_origin.split(",")
+        if origin.strip()
+    )
 
 app.add_middleware(
     CORSMiddleware,
